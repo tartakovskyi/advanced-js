@@ -32,10 +32,10 @@ function map(list, fn){
 }
 
 map(arr, function(names) {
-	const sortedArr = arr.sort();
-	for (var i = 0; i < sortedArr.length; i++) {
+	arr.sort();
+	for (var i = 0; i < arr.length; i++) {
 		let li = document.createElement('li');
-		li.innerText = sortedArr[i];
+		li.innerText = arr[i];
 		li.classList.add('list-group-item');
 		list.appendChild(li);
 	}
