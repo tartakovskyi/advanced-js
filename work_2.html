@@ -61,6 +61,32 @@ let users = [
  {id: 9, name: "Willy", age: "20"}
 ]
 
+let ages = [];
+
+users.forEach(function(user) {
+    if (!ages.includes(user.age)) ages.push(user.age);
+});
+
+ages.sort();
+
+ages.forEach(function(value){
+    let option = document.createElement('option');
+    option.value = value;
+    option.innerText = value;
+    usersSelect.appendChild(option);
+});
+
+usersSelect.addEventListener('change', function(e){
+    res.innerText = '';
+    users.forEach(function(user) {
+        if (user.age === e.target.value) {
+            let userDiv = document.createElement('div');
+            userDiv.innerText = user.name;
+            res.appendChild(userDiv);
+        }         
+    });  
+});
+
 </script>
 
 
