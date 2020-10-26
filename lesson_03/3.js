@@ -8,7 +8,7 @@ function getUsers() {
   return {
     addUser: function(name) {
       users.push(name);
-      return users;
+      return users.slice(); //заменил возврат оригинального users на новый экземпляр
     },
     getUsers: function() {
       return users.slice(); //заменил возврат оригинального users на новый экземпляр
