@@ -1,5 +1,6 @@
 const path = require('path');
-MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports =  (env = {mode: 'development'})  => {
 	const isProduction = env.mode === 'production';
@@ -36,6 +37,14 @@ module.exports =  (env = {mode: 'development'})  => {
 		plugins: [
 		new MiniCssExtractPlugin({
 			filename: "css/style.css"
+		}),
+		new OptimizeCssAssetsPlugin({
+			assetNameRegExp: /\.optimize\.css$/g,
+			cssProcessor: require('cssnano'),
+			cssProcessorPluginOptions: {
+				preset: ['default', { discardComments: { removeAll: true } }],
+			},
+			canPrint: true
 		})
 		],
 		devServer: {
