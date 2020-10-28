@@ -6,6 +6,12 @@ h1 {
 	font-size: 36px;
 }
 
-h1 {
+h2 {
 	font-size: 30px;
+}
+
+.class1 {
+	& .class2 {
+		width: 100%;
+	}
 }
