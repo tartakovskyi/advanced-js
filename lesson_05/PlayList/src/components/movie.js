@@ -3,7 +3,7 @@ import Media from './media';
 class Movie extends Media {
 	
 	constructor (title, duration, year) {
-		super(this);
+		super(title, duration);
 		this.year = year;
 	}
 
@@ -13,5 +13,6 @@ class Movie extends Media {
 		<div class="col-sm-3">${this.duration}</div>
 		</div>`
 	}
-
 }
+
+export default Movie;

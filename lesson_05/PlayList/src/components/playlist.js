@@ -1,29 +1,29 @@
 class PlayList {
-	constructor (songs) {
-		this.songs = songs;
+	constructor() {
+		this.songs = [];
 		this.currentIndex = 0;
 	}
 
-	add (media) {
-		this.push(media);
+	add(media) {
+		this.songs.push(media);
 	}
 
-	play () {
+	play() {
 		const currentSong = this.songs[this.currentIndex];
 		currentSong.play();
 	}
 
-	stop () {
+	stop() {
 		const currentSong = this.songs[this.currentIndex];
 		currentSong.stop();
 	}
 
-	next () {
+	next() {
 		this.stop();
 		this.currentIndex++;
 		if (this.currentIndex === this.songs.length) {
 			this.currentIndex = 0;
-		} 
+		}
 		this.play();
 	}
 
@@ -33,6 +33,6 @@ class PlayList {
 			list.innerHTML += song.toHtml();
 		});
 	}
-}​
+}
 
 export default PlayList;

@@ -3,7 +3,7 @@ import Media from './media';
 class Song extends Media {
 	
 	constructor (title, duration, artist) {
-		super(this);
+		super(title, duration);
 		this.artist = artist;
 	}
 
@@ -13,6 +13,6 @@ class Song extends Media {
 		<div class="col-sm-3">${this.duration}</div>
 		</div>`
 	}
-
-
 }
+
+export default Song;
