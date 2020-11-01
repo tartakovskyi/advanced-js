@@ -1,29 +1,30 @@
 // #region Setup
 const URL = 'https://jsonplaceholder.typicode.com/';
-const output = document.getElementById("output");
+const postTable = document.getElementById("postTable");
 const spinner = document.getElementById('spinner');
-​
 
-​
 function queryApi(endPoint) {
 	return fetch(URL + endPoint)
 	.then(result => result.ok ? result.json() : Promise.reject("unsuccessful request"))
 }
-​
-/*async function fetchAll() {
-	console.log("before queries inside fetch all");
+
+let postsHTML = '';
+
+async function getPosts() {
 	try {
-		const [{results: films}, {results: planets}] = await Promise.all([queryApi('films'), queryApi('planets')]);
-		console.log("after queries inside fetch all");
-		output.innerHTML = `Films: ${films.length}, Planets: ${planets.length}`;
+		const [posts, users] = await Promise.all([queryApi('posts'), queryApi('users')]);
+
+		console.log(posts)
+
+		for (var i = 0; i < 9; i++) {
+			postsHTML += `<div class="row mb-4"><div class="col-4">${posts[i].title}</div><div class="col-6">${posts[i].body}</div><div class="col-2"><a href="#">${posts[i].userId}</a></div></div>`;
+		}
+
+		postTable.innerHTML = postsHTML;
 	} catch (e) {
 		console.log(e);
-	} finally {
-		spinner.remove()
 	}
 }
-​
-fetchAll()*/
-console.log(queryApi('posts'));
-​
-output.innerHTML = "Loading ...";
+
+getPosts()
+postTable.innerHTML = "Loading ...";
