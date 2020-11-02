@@ -1,30 +1,63 @@
 // #region Setup
 const URL = 'https://jsonplaceholder.typicode.com/';
-const postTable = document.getElementById("postTable");
+const postTable = document.getElementById('postTable');
 const spinner = document.getElementById('spinner');
+
+let postsHTML = '';
+
 
 function queryApi(endPoint) {
 	return fetch(URL + endPoint)
 	.then(result => result.ok ? result.json() : Promise.reject("unsuccessful request"))
 }
 
-let postsHTML = '';
-
-async function getPosts() {
+async function getUserInfo(userId, postId) {
 	try {
-		const [posts, users] = await Promise.all([queryApi('posts'), queryApi('users')]);
 
-		console.log(posts)
+		const user = await queryApi('users/' + userId).then(user => {
+			return user;
+		});
 
-		for (var i = 0; i < 9; i++) {
-			postsHTML += `<div class="row mb-4"><div class="col-4">${posts[i].title}</div><div class="col-6">${posts[i].body}</div><div class="col-2"><a href="#">${posts[i].userId}</a></div></div>`;
+		let userHTML = `<div class="col-12">`;
+
+		for (let key in user) {
+			if (typeof user[key] != 'object') {
+				userHTML +=  `<div class="d-flex"><span>${key}:</span> <span>${user[key]}</span></div>`; 
+			}
 		}
 
-		postTable.innerHTML = postsHTML;
+		userHTML += `</div>`;
+
+		const post = document.getElementById(postId);
+
+		post.innerHTML += userHTML;
+
+		console.log(user);
+
 	} catch (e) {
 		console.log(e);
 	}
 }
 
-getPosts()
+async function getPosts() {
+	try {
+
+		const posts = await queryApi('posts').then(posts => {
+			return posts;
+		})
+
+		for (let i = 0; i < 29; i++) {
+			postsHTML += `<div class="row mb-4" id="${posts[i].id}"><div class="col-4">${posts[i].title}</div><div class="col-6">${posts[i].body}</div><div class="col-2"><a href="#" onclick="getUserInfo(${posts[i].userId}, ${posts[i].id}); return false">User info</a></div></div>`;
+		}
+
+		postTable.innerHTML = postsHTML;
+
+	} catch (e) {
+		console.log(e);
+	}
+}
+
+
+getPosts();
+
 postTable.innerHTML = "Loading ...";
