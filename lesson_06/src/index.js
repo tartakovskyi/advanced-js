@@ -47,7 +47,7 @@ async function getPosts() {
 		})
 
 		for (let i = 0; i < 29; i++) {
-			postsHTML += `<div class="row mb-4" id="${posts[i].id}"><div class="col-4">${posts[i].title}</div><div class="col-6">${posts[i].body}</div><div class="col-2"><a href="#" onclick="getUserInfo(${posts[i].userId}, ${posts[i].id}); return false">User info</a></div></div>`;
+			postsHTML += `<div class="row mb-4" id="${posts[i].id}"><div class="col-4">${posts[i].title}</div><div class="col-6">${posts[i].body}</div><div class="col-2"><a href="#" data-post="${posts[i].id}" data-user="${posts[i].userId}" class="userLink">User info</a></div></div>`;
 		}
 
 		postTable.innerHTML = postsHTML;
@@ -61,3 +61,11 @@ async function getPosts() {
 getPosts();
 
 postTable.innerHTML = "Loading ...";
+
+postTable.addEventListener('click', function(e) {
+	if (e.target.className == "userLink") {
+		const post = e.target.dataset.post;
+		const user = e.target.dataset.user;
+		getUserInfo(user, post);
+	}
+})
