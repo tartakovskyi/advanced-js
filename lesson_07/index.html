@@ -36,50 +36,101 @@ class UserList extends React.Component {
   constructor(props) {
     super();
     this.state = {
+      searchTerm: '',
       users: []
     }
-
     this.getUsers();
   }
 
-  getUsers() {
-    try {
-      fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(users => this.setState(users : users))
-    } catch {
-      return (error) => console.log(error)
-    }
+  async getUsers() {
+    await fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response => response.json())
+    .then(users => this.setState({users : users}))
+  }
+
+  get getFilteredUsers() {
+
+    const { users, searchTerm } = this.state;
+
+    return users
+    .filter(user => user.value.toLowerCase().includes(searchTerm.toLowerCase()))
+    .map(user => (
+      <User key={item.id} user={user} />
+      ))
+  }
+
+  updateSearchTerm = event => {
+    this.setState({ searchTerm: event.target.value });
   }
 
   render() {
-    this.getUsers();
-    console.log(this.state.users)
-    return this.state.users.map(user => {
-      return (
-        <div key={user.id} className="row">
-        <div className="col-1">{user.id}</div>
-        <div className="col-3">{user.name}</div>
-        <div className="col-2">{user.username}</div>
-        <div className="col-3">{user.email}</div>
-        <div className="col-3">{user.phone}</div>
-        </div>   
-        );
-    });
+
+    return (
+      <div>
+      <Filter searchTerm={this.searchTerm} onChange={this.updateSearchTerm} />
+      {this.getFilteredUsers}
+      </div>
+      );
+  }
+}
+
+class Filter extends React.Component {
+  render() {
+    return (
+      <div className='mb-3'>
+      <input
+      type="text"
+      className='form-control'
+      onChange={this.props.onChange}
+      value={this.props.searchTerm}
+      />
+      </div>
+      )
+  }
+}
+
+class User extends React.Component {
+  render() {
+
+    const { user } = this.props;
+
+    return (
+      <div key={user.id} className="row">
+      <div className="col-1">{user.id}</div>
+      <div className="col-3">{user.name}</div>
+      <div className="col-2">{user.username}</div>
+      <div className="col-3">{user.email}</div>
+      <div className="col-3">{user.phone}</div>
+      </div>
+      )
   }
 }
 
 
 class App extends React.Component {
 
-  render (
-    <UserList />
-  );
+  render (){
+    return (
+      <div className="container">
+      <h1>Users</h1>
+      <UserList />
+      </div>
+      );
+  }
 }
 
 ReactDOM.render(<App />, root)
-ReactDOM.render(<App />, root)
-
 </script>
 </body>
 </html>
+
+
+<!-- Получить данные с сервиса https://jsonplaceholder.typicode.com/users и вывести список из 10 пользователей (name, username, email)
+
+Реализовать фильтрацию пользователей по по имени
+
+При этом
+
+задание выполнить в двух вариантах - на классах и с использованием hooks
+ использовать композицию компонентов
+ валидировать props используя библиотеку prop-types -->  
