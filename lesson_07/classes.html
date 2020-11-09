@@ -89,6 +89,10 @@ class Filter extends React.Component {
   }
 }
 
+Filter.propTypes = {
+  searchTerm: PropTypes.string
+}
+
 class User extends React.Component {
   render() {
 
@@ -104,6 +108,10 @@ class User extends React.Component {
       </div>
       )
   }
+}
+
+User.propTypes = {
+  user: PropTypes.object
 }
 
 

@@ -44,8 +44,6 @@ function UserList(props) {
 
   getUsers();
 
-  
-
   const updateSearchTerm = event => {
     setSearchTerm(event.target.value);
   }
@@ -72,6 +70,10 @@ function Filter(props) {
     )
 }
 
+Filter.propTypes = {
+  searchTerm: PropTypes.string
+}
+
 function FilteredUsers(props) {
 
     return props.users
@@ -93,6 +95,10 @@ function User(props) {
     <div className="col-3">{user.phone}</div>
     </div>
     )
+}
+
+User.propTypes = {
+  user: PropTypes.object
 }
 
 function App(props) {
