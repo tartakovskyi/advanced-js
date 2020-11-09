@@ -53,9 +53,9 @@ class UserList extends React.Component {
     const { users, searchTerm } = this.state;
 
     return users
-    .filter(user => user.value.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
     .map(user => (
-      <User key={item.id} user={user} />
+      <User key={user.id} user={user} />
       ))
   }
 
