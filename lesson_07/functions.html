@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lesson 6 (React)</title>
+  <link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+  />
+</head>
+<body>
+  <div id="root"></div>
+  <script
+  crossorigin
+  src="https://unpkg.com/react@16.8.3/umd/react.development.js"
+  ></script>
+  <script
+  crossorigin
+  src="https://unpkg.com/react-dom@16.8.3/umd/react-dom.development.js"
+  ></script>
+  <script
+  crossorigin
+  src="https://unpkg.com/prop-types@15.7.2/prop-types.js"
+  ></script>
+  <script
+  crossorigin
+  src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"
+  ></script>
+  <script type="text/babel">
+    const root = document.getElementById("root");
+
+function UserList(props) {
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [users, setUsers] = React.useState([]);
+
+  async function getUsers() {
+    await fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response => response.json())
+    .then(users => setUsers(users))
+  }
+
+  getUsers();
+
+  
+
+  const updateSearchTerm = event => {
+    setSearchTerm(event.target.value);
+  }
+
+  return (
+    <div>
+    <Filter searchTerm={searchTerm} onChange={updateSearchTerm} />
+    <FilteredUsers users={users} searchTerm={searchTerm} />
+    </div>
+    );
+
+}
+
+function Filter(props) {
+  return (
+    <div className='mb-3'>
+    <input
+    type="text"
+    className='form-control'
+    onChange={props.onChange}
+    value={props.searchTerm}
+    />
+    </div>
+    )
+}
+
+function FilteredUsers(props) {
+
+    return props.users
+    .filter(user => user.name.toLowerCase().includes(props.searchTerm.toLowerCase()))
+    .map(user => (
+      <User key={user.id} user={user} />
+      ))
+  }
+
+function User(props) {
+  const { user } = props;
+
+  return (
+    <div key={user.id} className="row">
+    <div className="col-1">{user.id}</div>
+    <div className="col-3">{user.name}</div>
+    <div className="col-2">{user.username}</div>
+    <div className="col-3">{user.email}</div>
+    <div className="col-3">{user.phone}</div>
+    </div>
+    )
+}
+
+function App(props) {
+  return (
+    <div className="container">
+    <h1>Users</h1>
+    <UserList />
+    </div>
+    );
+}
+
+
+ReactDOM.render(<App />, root)
+</script>
+</body>
+</html>
+
+
+<!-- Получить данные с сервиса https://jsonplaceholder.typicode.com/users и вывести список из 10 пользователей (name, username, email)
+
+Реализовать фильтрацию пользователей по по имени
+
+При этом
+
+задание выполнить в двух вариантах - на классах и с использованием hooks
+ использовать композицию компонентов
+ валидировать props используя библиотеку prop-types -->  
