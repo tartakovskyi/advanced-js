@@ -27,7 +27,7 @@
     ></script>
 
     <script type="text/babel">
-    const root = document.getElementById("root");
+      const root = document.getElementById("root");
 
 class Form extends React.Component {
   state = {
@@ -44,70 +44,38 @@ class Form extends React.Component {
 
   render() {
     return (
-            <form onSubmit={this.handleSubmit}>
-              <div className="form-box">
-                <div className="form-box__item">
-                  <input
-                      type="text"
-                      value={this.state.value}
-                      onChange={this.update}
-                  />
-                  <button>Add user</button>
-                </div>
-              </div>
-            </form>
-    )
+      <form onSubmit={this.handleSubmit}>
+      <div className="form-box">
+      <div className="form-box__item">
+      <input
+      type="text"
+      value={this.state.value}
+      onChange={this.update}
+      />
+      <button>Add user</button>
+      </div>
+      </div>
+      </form>
+      )
   }
 }
 
-const Cart = ({ profile }) => (
-        <div className="cart">
-          <h3>{profile.name}</h3>
-          <p>{profile.login}</p>
-          <img src={profile.avatar_url} alt="https://placehold.it/75"/>
-        </div>
-)
+const Cart = ({ profile, remove }) => (
+  <div className="cart">
+  <h3>{profile.name}</h3>
+  <p>{profile.login}</p>
+  <img src={profile.avatar_url} alt="https://placehold.it/75"/>
+  <button onClick="{() => remove(profile.id)}">Remove user</button>  
+  </div>
+  )
 
-const CartList = ({ data }) => (
-        <div className="cart-box">
-          {data.map(profile => (
-            <Cart key={profile.id} profile={profile} />
-          ))}
-        </div>
-)
-
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { error: null, errorInfo: null };
-  }
-  
-  componentDidCatch(error, errorInfo) {
-    this.setState({
-      error: error,
-      errorInfo: errorInfo
-    })
-  }
-  
-  render() {
-
-    if (this.state.errorInfo) {
-      
-      return (
-        <div>
-          <h2>Something went wrong.</h2>
-          <details style={{ whiteSpace: 'pre-wrap' }}>
-            {this.state.error && this.state.error.toString()}
-            <br />
-            {this.state.errorInfo.componentStack}
-          </details>
-        </div>
-      );
-    }
-    
-    return this.props.children;
-  }  
-}
+const CartList = ({ data, remove }) => (
+  <div className="cart-box">
+  {data.map(profile => (
+    <Cart key={profile.id} profile={profile} remove={remove} />
+    ))}
+  </div>
+  )
 
 class App extends React.Component {
   state = {
@@ -125,15 +93,15 @@ class App extends React.Component {
     }    
   }
 
+  removeUser = userID => setState({data : data.filter(user => user.id !== userID)});
+
   render() {
     return (
       <div className="container">
-        <ErrorBoundary>
-          <Form submit={this.addUser} />
-          <CartList data={this.state.data}/>
-        </ErrorBoundary>
+        <Form submit={this.addUser} />
+        <CartList data={this.state.data} remove={this.removeUser}/>
       </div>
-    )
+      )
   }
 }
 
