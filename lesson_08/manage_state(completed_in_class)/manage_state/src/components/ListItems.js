@@ -17,29 +17,32 @@ function ListItems(props) {
 
         const filteredItems = items.filter(item => item.value.toLowerCase().includes(searchTerm.toLowerCase()));
 
-        return filteredItems.map(item => (
-                <Item
-                    key={item.id}
-                    item={item}
-                    removeItem={removeItem}
-                    toggleItem={toggleItem}
-                />
-            )
-        )
+        if (searchTerm != '' && filteredItems.length == 0) {
+            throw new Error('Items not found');
+        } else {
+            return filteredItems.map(item => (
+            <Item
+            key={item.id}
+            item={item}
+            removeItem={removeItem}
+            toggleItem={toggleItem}
+            />
+            ))
+        }     
 
-        
-    }
 
-    const { title } = props;
+}
 
-    return (
-        <section>
-            <h3 className='mb-3'>{title}</h3>
-            <Filter searchTerm={searchTerm} onChange={updateSearchTerm} />
-            <ErrorBoundary>
-                <ul className='list-group mb-3'><List /></ul>
-            </ErrorBoundary>
-        </section>
+const { title } = props;
+
+return (
+    <section>
+    <h3 className='mb-3'>{title}</h3>
+    <Filter searchTerm={searchTerm} onChange={updateSearchTerm} />
+    <ErrorBoundary>
+    <ul className='list-group mb-3'><List /></ul>
+    </ErrorBoundary>
+    </section>
     )
 }
 

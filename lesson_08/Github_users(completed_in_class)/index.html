@@ -93,7 +93,9 @@ class App extends React.Component {
     }    
   }
 
-  removeUser = userID => setState({data : this.state.data.filter(user => user.id !== userID)});
+  removeUser = userID => {
+    this.setState({data : this.state.data.filter(user => user.id !== userID)})
+};
 
   render() {
     return (
