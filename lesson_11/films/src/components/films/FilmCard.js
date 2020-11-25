@@ -1,7 +1,8 @@
 import React from "react"
 import PropTypes from 'prop-types'
 import Featured from './Featured'
-import DescriptionIcon from './DescriptionIcon'
+import Description from './Description'
+import DescrOpen from './DescrOpen'
 
 const FilmCard = ({film}) => (
         <div className="ui card">
@@ -11,6 +12,7 @@ const FilmCard = ({film}) => (
             <div className="image">
                 <span className="ui green label ribbon">$ {film?.price} </span>
                 <Featured featured={film.featured} id={film._id} />
+                <Description description={film.description} descrOpen={film.descrOpen} />
                 <img src={film?.img} alt={film?.title} />
             </div>
 
@@ -26,7 +28,7 @@ const FilmCard = ({film}) => (
                     </span>
                 </div>
                 <div className="meta">
-                    <DescriptionIcon description={film.description} id={film._id} />
+                    <DescrOpen descrOpen={film.descrOpen} id={film._id} />
                 </div>
             </div>
         </div>
@@ -40,7 +42,7 @@ FilmCard.proptTypes = {
         duration: PropTypes.number.isRequired,
         price: PropTypes.number.isRequired,
         featured: PropTypes.bool.isRequired,
-        description: PropTypes.bool.isRequired,
+        descrOpen: PropTypes.bool.isRequired,
     })
 }
 

@@ -30,7 +30,7 @@ class App extends Component {
         this.setState(({films}) => ({
             films: this.sortFilms(
                 films.map(item =>
-                    item._id === id ? {...item, description: !item.description} : item,
+                    item._id === id ? {...item, descrOpen: !item.descrOpen} : item,
                 ),
             ),
         }))

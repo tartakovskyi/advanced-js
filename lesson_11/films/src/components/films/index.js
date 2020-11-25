@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import FilmCard from './FilmCard'
 import Message from '../Message'
+import './films.css';
 
 const FilmsList = ({films}) => (
     <div className='ui four cards'>

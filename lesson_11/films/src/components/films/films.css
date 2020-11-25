@@ -1,0 +1,21 @@
+.ui.card>.image {
+	overflow-y: hidden;
+	overflow-x: visible; 
+}
+
+.film-description {
+	position: absolute;
+	left: 0;
+	top: 100%;
+	z-index: 1;
+	display: block;
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+	background-color: #fff;
+	transition: top .3s ease;
+}
+
+.film-description.open {
+	top: 0;
+}

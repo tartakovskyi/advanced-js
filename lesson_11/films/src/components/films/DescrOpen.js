@@ -2,9 +2,9 @@ import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 import {AppContext} from '../App'
 
-const DescriptionIcon = ({description, id}) => {
+const DescrOpen = ({descrOpen, id}) => {
     const {toggleDescription} = useContext(AppContext)
-    const cls = description ? 'icon eye slash' : 'icon eye'
+    const cls = 'icon eye' + (descrOpen ? ' slash' : '');
 
     return (
         <i className={cls} onClick={() => toggleDescription(id)} />
@@ -12,8 +12,8 @@ const DescriptionIcon = ({description, id}) => {
 }
 
 
-DescriptionIcon.propTypes = {
-    description: PropTypes.bool.isRequired,
+DescrOpen.propTypes = {
+    descrOpen: PropTypes.bool.isRequired,
 }
 
-export default DescriptionIcon
+export default DescrOpen
