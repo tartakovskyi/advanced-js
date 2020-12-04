@@ -23,7 +23,7 @@ class FilmsForm extends Component {
     }
 
     componentDidMount() {
-        if (this.props.film._id) {
+        if (this.props.film && this.props.film._id) {
             this.setState({data: this.props.film})
         }
     }
@@ -31,14 +31,14 @@ class FilmsForm extends Component {
     static getDerivedStateFromProps(props, state) {
         const {film} = props
 
-        if (film._id && film._id !== state.data._id) {
+        if (film && film._id && film._id !== state.data._id) {
             return {
                 data: film,
                 error: {}
             }
         }
 
-        if (!film._id && state.data._id !== null) {
+        if (!film || !film._id && state.data._id !== null) {
             return {
                 data: initialData,
                 error: {}

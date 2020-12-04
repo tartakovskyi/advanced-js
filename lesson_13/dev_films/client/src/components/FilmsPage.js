@@ -98,18 +98,6 @@ class FilmsPage extends Component {
                         )}
                     />
 
-                    <Route
-                        path='/film/:_id'
-                        render={props => (
-                            <div className='six wide column'>
-                                <FilmsForm
-                                    submit={this.saveFilm}
-                                    film={find(this.state.films, { _id: props.match.params._id }) }
-                                />
-                            </div>
-                        )}
-                    />
-
                     <div className={`${numCol} wide column`}>
                         {
                             this.state.isLoading ? (
