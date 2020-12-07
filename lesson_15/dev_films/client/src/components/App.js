@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {Route,Switch} from "react-router-dom"
+import {Route} from "react-router-dom"
 import Film from "./films/Film"
 import TopNavigation from "./TopNavigation"
 import {Async, lazyImport} from './Async'
@@ -55,10 +55,7 @@ const App = () => {
             )}
 
             <Route exact path="/" component={HomePage} />
-            <Switch>
-	            <Route exact path="/films" render={props => <FilmsPage {...props} user={user} />} />
-	            <Route path="/films/edit/:_id" render={props => <FilmsPage {...props} user={user} />} />
-            </Switch>
+            <Route path="/films" render={props => <FilmsPage {...props} user={user} />} />
             <Route path="/film/:_id" exact component={Film} />
             <Route
                 path='/signup'

@@ -1,35 +1,16 @@
-import React, {Component} from "react"
+import React, {useContext} from "react"
 import {Route, Redirect} from 'react-router-dom'
 import {AppContext} from './App'
+import FilmForm from "./forms/FilmForm"
 
-const AdminRoute =() => {
+const AdminRoute = (props) => {
 
-    {this.props.user.role === 'admin' ? (
-        <>
-        <Route
-        path="/films/new"
-        render={() => (
-            <div className="six wide column">
-            <FilmForm submit={this.saveFilm} film={{}} />
-            </div>
-            )}
-        />
+    const {user} = useContext(AppContext);
 
-        <Route
-        path="/films/edit/:_id"
-        render={props => (
-            <div className="six wide column">
-            <FilmForm
-            submit={this.saveFilm}
-            film={  find(this.state.films, { _id: props.match.params._id,}) || {} }
-            />
-            </div>
-            )}
-        />
-        </>
-        ): (
-        <Route path='/films/*' render={() => <Redirect to='/films' />} />
-        )
+    if (user && user.role === 'admin') {
+        return (<Route path={props.path} render={props.render}  />)
+    } else {
+        return (<Route path='/films/*' render={() => <Redirect to='/films' />} />)
     }
 }
 

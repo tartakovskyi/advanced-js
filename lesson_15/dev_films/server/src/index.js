@@ -25,7 +25,7 @@ app.use("/api/auth", auth);
 app.use("/api/films", films);
 app.use("/api/authfilms", authfilms);
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 const mongoUrl = `${process.env.DB_CONNECTION}`;
 
 mongodb.MongoClient.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })

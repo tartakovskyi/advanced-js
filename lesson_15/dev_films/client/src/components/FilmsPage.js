@@ -1,12 +1,10 @@
 import React, {Component} from "react"
-import {Route, Redirect} from 'react-router-dom'
+import AdminRoute from '../components/AdminRoute'
 import api from "../api"
 import FilmsList from "./films"
-import FilmForm from "./forms/FilmForm"
 import {AppContext} from './App'
-import AdminRoute from "./AdminRoute"
+import FilmForm from "./forms/FilmForm"
 import {orderBy, find} from 'lodash';
-
 
 class FilmsPage extends Component {
     state = {
@@ -70,28 +68,27 @@ class FilmsPage extends Component {
                 }}
             >
                 <div className="ui stackable grid">
-
-                    <AdminRoute
-                        path="/films/new"
-                        render={() => (
-                        <div className="six wide column">
-                            <FilmForm submit={this.saveFilm} film={{}} />
-                        </div>
-                        )}
+                    <AdminRoute  path="/films/new"
+                                 user={this.props.user}
+                                 render={() => (
+                                     <div className="six wide column">
+                                         <FilmForm submit={this.saveFilm} film={{}} />
+                                     </div>
+                                 )}
                     />
 
-                    <AdminRoute
-                    path="/films/edit/:_id"
-                    render={props => (
-                        <div className="six wide column">
-                        <FilmForm
-                            submit={this.saveFilm}
-                            film={  find(this.state.films, { _id: this.props.match.params._id}) || {} }
-                        />
-                        </div>
-                        )}
+                    <AdminRoute  path="/films/edit/:_id"
+                                 user={this.props.user}
+                                 render={({match}) => (
+                                     <div className="six wide column">
+                                         <FilmForm  submit={this.saveFilm}
+                                                     film={find(this.state.films, {_id: match.params._id}) || {}}
+                                         />
+                                     </div>
+                                 )}
                     />
-                   
+
+
                     <div className={`${numCol} wide column`}>
                         {
                             this.state.loading ? (
