@@ -34,7 +34,7 @@ const FilmsPage = (props) => {
     const addFilm = filmData =>
         api.films.create(filmData).then(film => {
             setFilms(sortFilms([...films, {...film}]));
-            setIsLoading(false);
+            setShowAddForm(false);
         })
 
 
