@@ -9,13 +9,15 @@ import {addBookAction} from '../../ac/booksAction'
 const BookForm = ({match, books, categories, addBookAction}) => {
     const [redirect, setRedirect] = useState(false)
     const { register, handleSubmit, errors, control, setError, getValues } = useForm()
-    const options = [{value: '-1', label: 'Choose category'}]
-    categories.map(cat => options.push({value: cat._id, label: cat.title}))
-    if (match.params.id) {
-        const bookData = match.params.id
-    }
     const bookData = match.params.id && books.filter(book => book._id == match.params.id).length ? books.filter(book => book._id == match.params.id)[0] : null
-    console.log(bookData)
+    const options = [{value: '-1', label: 'Choose category'}]
+    let selectedCatIndex = 0
+    categories.map(
+        (cat, index) => {
+            options.push({value: cat._id, label: cat.title})
+            if (bookData && bookData.categoryId == cat._id) selectedCatIndex = index + 1
+        }
+    )
 
     function onSubmit(data, e) {
         e.preventDefault()
@@ -43,6 +45,7 @@ const BookForm = ({match, books, categories, addBookAction}) => {
                     type="text"
                     className="form-control"
                     ref={register({ required: true })}
+                    value={bookData ? bookData.title : ''}
                 />
                 {errors.title && "Title is required."}
             </div>
@@ -54,6 +57,7 @@ const BookForm = ({match, books, categories, addBookAction}) => {
                     type="text"
                     className="form-control"
                     ref={register({ required: true })}
+                    value={bookData ? bookData.desc : ''}
                 />
                 {errors.desc && "Description  is required."}
             </div>
@@ -63,7 +67,7 @@ const BookForm = ({match, books, categories, addBookAction}) => {
                 ref={{ required: true}}
                 onChange={([selected]) => selected }
                 name={'categoryId'}
-                defaultValue={options[0]}
+                defaultValue={options[selectedCatIndex]}
             />
             {errors.categoryId && 'Categories  is required.'}
 
