@@ -4,9 +4,9 @@ import { useForm, Controller } from 'react-hook-form'
 import Select from 'react-select'
 import { mapToArr} from "../../utils"
 import {Redirect} from 'react-router-dom'
-import {addBookAction} from '../../ac/booksAction'
+import {addBookAction, editBookAction} from '../../ac/booksAction'
 
-const BookForm = ({match, books, categories, addBookAction}) => {
+const BookForm = ({match, books, categories, addBookAction, editBookAction}) => {
     const [redirect, setRedirect] = useState(false)
     const { register, handleSubmit, errors, control, setError, getValues } = useForm()
     const bookData = match.params.id && books.filter(book => book._id == match.params.id).length ? books.filter(book => book._id == match.params.id)[0] : null
@@ -30,7 +30,12 @@ const BookForm = ({match, books, categories, addBookAction}) => {
 
         data = {...data, categoryId: data.categoryId.value}
 
-        addBookAction(data)
+        if (bookData) {
+            data = {...data, _id: bookData._id}
+            editBookAction(data)       
+        } else {
+            addBookAction(data)
+        }
         setRedirect(true)
     }
 
@@ -45,7 +50,7 @@ const BookForm = ({match, books, categories, addBookAction}) => {
                     type="text"
                     className="form-control"
                     ref={register({ required: true })}
-                    value={bookData ? bookData.title : ''}
+                    defaultValue={bookData ? bookData.title : ''}
                 />
                 {errors.title && "Title is required."}
             </div>
@@ -57,7 +62,7 @@ const BookForm = ({match, books, categories, addBookAction}) => {
                     type="text"
                     className="form-control"
                     ref={register({ required: true })}
-                    value={bookData ? bookData.desc : ''}
+                    defaultValue={bookData ? bookData.desc : ''}
                 />
                 {errors.desc && "Description  is required."}
             </div>
@@ -96,4 +101,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {addBookAction})(BookForm)
+export default connect(mapStateToProps, {addBookAction, editBookAction})(BookForm)

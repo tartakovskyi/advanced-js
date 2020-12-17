@@ -8,6 +8,8 @@ export default (state= defaultBooks, action) => {
     switch(type) {
         case C.ADD_BOOK: return [{_id: id(), ...payload}, ...state]
 
+        case C.EDIT_BOOK: return [payload, ...state.filter(book => book._id != payload._id)]
+
         default: return state
     }
 }
